@@ -32,7 +32,7 @@ body {
 
 #modify-times-container {
   position: absolute;
-  top: 16%;
+  top: 25%;
   right: -105px;
   display: flex;
 }
@@ -42,6 +42,8 @@ body {
   margin-right: 7px;
   text-align: center;
   color: #666;
+
+  i { cursor: pointer; }
 }
 
 #quick-select-time-container {

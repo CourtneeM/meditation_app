@@ -2,10 +2,14 @@ import './styles/style.css';
 import displayController from "./modules/display_controller";
 
 const songs = [];
+const SECONDS_IN_A_MINUTE = 60;
 let currentTimeInSeconds = 0;
 
 const convertTime = currentTimeInSeconds => {
-  return `${currentTimeInSeconds}`;
+  let minutes = currentTimeInSeconds >= SECONDS_IN_A_MINUTE ? String(Math.floor(currentTimeInSeconds / SECONDS_IN_A_MINUTE)) : String(0);
+  let seconds = String(Math.round(currentTimeInSeconds % SECONDS_IN_A_MINUTE));
+
+  return `${minutes.padStart(2, '0')}:${seconds.padStart(2, '0')}`;
 }
 
 const setTimerDisplay = () => {
@@ -19,12 +23,12 @@ const initialRender = (() => {
 })();
 
 const eventHandler = (() => {
-  const modifyTime = (() => {
-    const incrementTime = modifyTimeAmount => currentTimeInSeconds += modifyTimeAmount * 60;
+  const modifyTimeListener = (() => {
+    const incrementTime = modifyTimeAmount => currentTimeInSeconds += modifyTimeAmount * SECONDS_IN_A_MINUTE;
     
     const decrementTime = modifyTimeAmount => {
-      if (currentTimeInSeconds - modifyTimeAmount * 60 < 0) return currentTimeInSeconds = 0;
-      currentTimeInSeconds -= modifyTimeAmount * 60;
+      if (currentTimeInSeconds - modifyTimeAmount * SECONDS_IN_A_MINUTE < 0) return currentTimeInSeconds = 0;
+      currentTimeInSeconds -= modifyTimeAmount * SECONDS_IN_A_MINUTE;
     }
     
     [...document.querySelectorAll('.modify-time-container')].forEach(container => {
@@ -46,10 +50,31 @@ const eventHandler = (() => {
     });
   })();
 
-  const startMeditation = () => {
-    document.querySelector('#start-btn').addEventListener('click', () => {
-      
+  const setQuickTimeListener = (() => {
+    [...document.querySelectorAll('.quick-select-time')].forEach(quickTime => {
+      quickTime.addEventListener('click', e => {
+        let quickTimeAmount = e.target.textContent;
+        currentTimeInSeconds = quickTimeAmount * SECONDS_IN_A_MINUTE;
+        setTimerDisplay(currentTimeInSeconds);
+      });
     });
-  }
+  })();
+
+  const setSoundEffectListener = (() => {
+    [...document.querySelectorAll('.sound-effect')].forEach(soundEffect => {
+      // set up sound effects first
+    });
+  })();
+
+  const startMeditation = (() => {
+    document.querySelector('#start-btn').addEventListener('click', () => {
+      const countdown = setInterval(() => {
+        currentTimeInSeconds -= 1;
+        setTimerDisplay();
+
+        if (currentTimeInSeconds <= 0) clearInterval(countdown);
+      }, 1000);
+    });
+  })();
 })();
 
