@@ -1,9 +1,15 @@
 import './styles/style.css';
 import displayController from "./modules/display_controller";
 
-const songs = [];
+const soundEffects = {
+  rain: '../dist/sounds/344430__babuababua__light-rain.mp3',
+  fire: '../dist/sounds/17554__dynamicell__fire-embers-large-campfire.mp3',
+  ocean: '..dist/sounds/48412__luftrum__oceanwavescrushing.mp3',
+  coffeeShop: '../dist/sounds/327594__janevdmerwe1995__ambience-of-coffee-shop.mp3'
+};
+
 const SECONDS_IN_A_MINUTE = 60;
-let currentTimeInSeconds = 0;
+let currentTimeInSeconds = 70;
 
 const convertTime = currentTimeInSeconds => {
   let minutes = currentTimeInSeconds >= SECONDS_IN_A_MINUTE ? String(Math.floor(currentTimeInSeconds / SECONDS_IN_A_MINUTE)) : String(0);
@@ -68,11 +74,23 @@ const eventHandler = (() => {
 
   const startMeditation = (() => {
     document.querySelector('#start-btn').addEventListener('click', () => {
-      const countdown = setInterval(() => {
-        currentTimeInSeconds -= 1;
-        setTimerDisplay();
+      const audio = new Audio(soundEffects.fire);
+      audio.play();
+      audio.loop = true;
+      
+      const body = document.querySelector('body');
+      body.style.pointerEvents = 'none';
 
-        if (currentTimeInSeconds <= 0) clearInterval(countdown);
+      const countdown = setInterval(() => {
+        if (currentTimeInSeconds <= 0) {
+          clearInterval(countdown);
+          audio.pause();
+
+          body.style.pointerEvents = 'auto';
+        } else { 
+          currentTimeInSeconds -= 1;
+          setTimerDisplay();
+        }
       }, 1000);
     });
   })();
