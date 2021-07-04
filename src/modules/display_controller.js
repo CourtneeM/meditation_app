@@ -57,16 +57,30 @@ const displayController = (() => {
 
     const soundEffectsContainer = () => {
       const soundEffectsContainer = document.createElement('div');
-      const soundEffectOptions = ['effect1', 'effect2', 'effect3', 'effect4'];
+      const soundEffectOptions = ['rain', 'fire', 'ocean', 'coffee-shop'];
   
       soundEffectsContainer.id = 'sound-effects-container';
   
       soundEffectOptions.forEach(option => {
         const soundEffectContainer = document.createElement('div');
   
-        soundEffectContainer.id = option;
-        soundEffectContainer.classList.add('sound-effect');
-        // add sound element and necessary attributes;
+        soundEffectContainer.id = `${option}-sound`;
+        soundEffectContainer.classList.add('sound-effect', 'fas');
+
+        switch (option) {
+          case 'rain':
+            soundEffectContainer.classList.add('fa-cloud-showers-heavy');
+            break;
+          case 'fire':
+            soundEffectContainer.classList.add('fa-fire-alt');
+            break;
+          case 'ocean':
+            soundEffectContainer.classList.add('fa-water')
+            break;
+          case 'coffee-shop':
+            soundEffectContainer.classList.add('fa-coffee');
+            break;
+        }
   
         soundEffectsContainer.appendChild(soundEffectContainer);
       });
