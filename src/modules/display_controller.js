@@ -1,97 +1,111 @@
 const displayController = (() => { 
-  const generateTimerDisplay = () => {
-    const timerDisplayH2 = document.createElement('h2');
+  const generate = (() => {
+    const timerDisplay = () => {
+      const timerDisplayContainer = document.createElement('div');
+      const timerDisplayH2 = document.createElement('h2');
+  
+      timerDisplayContainer.id = 'timer-display-container';
+      timerDisplayH2.id = 'timer-display';
+  
+      [timerDisplayH2, modifyTimesContainer()].forEach(el => timerDisplayContainer.appendChild(el));
+      return timerDisplayContainer;
+    }
 
-    timerDisplayH2.id = 'timer-display';
-    timerDisplayH2.textContent = "00:00";
-
-    return timerDisplayH2;
-  }
-
-  const generateModifyTimesContainer = () => {
-    const modifyTimesContainer = document.createElement('div');
-    const modifyOptions = [1, 5, 10];
-
-    modifyTimesContainer.id = 'modify-times-container';
-    
-    modifyOptions.forEach(option => {
-      const modifyTimeContainer = document.createElement('div');
-      const incrementBtn = document.createElement('i');
-      const decrementBtn = document.createElement('i');
-      const timeAmount = document.createElement('p');
-
-      modifyTimeContainer.classList.add('modify-time-container');
-      incrementBtn.classList.add('incremenet-time-btn');
-      decrementBtn.classList.add('decrement-time-btn');
-      timeAmount.classList.add('modify-time-amount');
-
-      timeAmount.textContent = option;
-
-      [incrementBtn, timeAmount, decrementBtn].forEach(el => modifyTimeContainer.appendChild(el));
-      modifyTimesContainer.appendChild(modifyTimeContainer);
-    });
-
-    return modifyTimesContainer;
-  }
-
-  const generateQuickSelectTimeContainer = () => {
-    const quickSelectTimeContainer = document.createElement('div');
-    const quickSelectOptions = [5, 10, 15];
-
-    quickSelectTimeContainer.id = 'quick-select-time-container';
-
-    quickSelectOptions.forEach(option => {
-      const quickSelectTime = document.createElement('p');
+    const modifyTimesContainer = () => {
+      const modifyTimesContainer = document.createElement('div');
+      const modifyOptions = [1, 5, 10];
+  
+      modifyTimesContainer.id = 'modify-times-container';
       
-      quickSelectTime.classList.add('quick-select-time');
-      quickSelectTime.textContent = option;
+      modifyOptions.forEach(option => {
+        const modifyTimeContainer = document.createElement('div');
+        const incrementBtn = document.createElement('i');
+        const decrementBtn = document.createElement('i');
+        const timeAmount = document.createElement('p');
+  
+        modifyTimeContainer.classList.add('modify-time-container');
+        incrementBtn.classList.add('increment-time-btn', 'fas', 'fa-plus');
+        decrementBtn.classList.add('decrement-time-btn', 'fas', 'fa-minus');
+        timeAmount.classList.add('modify-time-amount');
+  
+        timeAmount.textContent = option;
+  
+        [incrementBtn, timeAmount, decrementBtn].forEach(el => modifyTimeContainer.appendChild(el));
+        modifyTimesContainer.appendChild(modifyTimeContainer);
+      });
+  
+      return modifyTimesContainer;
+    }
 
-      quickSelectTimeContainer.appendChild(quickSelectTime);
-    });
+    const quickSelectTimeContainer = () => {
+      const quickSelectTimeContainer = document.createElement('div');
+      const quickSelectOptions = [5, 10, 15];
+  
+      quickSelectTimeContainer.id = 'quick-select-time-container';
+  
+      quickSelectOptions.forEach(option => {
+        const quickSelectTime = document.createElement('p');
+        
+        quickSelectTime.classList.add('quick-select-time');
+        quickSelectTime.textContent = option;
+  
+        quickSelectTimeContainer.appendChild(quickSelectTime);
+      });
+  
+      return quickSelectTimeContainer;
+    }
 
-    return quickSelectTimeContainer;
-  }
+    const soundEffectsContainer = () => {
+      const soundEffectsContainer = document.createElement('div');
+      const soundEffectOptions = ['effect1', 'effect2', 'effect3', 'effect4'];
+  
+      soundEffectsContainer.id = 'sound-effects-container';
+  
+      soundEffectOptions.forEach(option => {
+        const soundEffectContainer = document.createElement('div');
+  
+        soundEffectContainer.id = option;
+        soundEffectContainer.classList.add('sound-effect');
+        // add sound element and necessary attributes;
+  
+        soundEffectsContainer.appendChild(soundEffectContainer);
+      });
+  
+      return soundEffectsContainer;
+    }
 
-  const generateSoundEffectsContainer = () => {
-    const soundEffectsContainer = document.createElement('div');
-    const soundEffectOptions = ['effect1', 'effect2', 'effect3', 'effect4'];
+    const startBtn = () => {
+      const startBtn = document.createElement('button');
+  
+      startBtn.id = 'start-btn';
+      startBtn.textContent = 'Start';
+  
+      return startBtn;
+    }
 
-    soundEffectsContainer.id = 'sound-effects-container';
-
-    soundEffectOptions.forEach(option => {
-      const soundEffectContainer = document.createElement('div');
-
-      soundEffectContainer.id = option;
-      soundEffectContainer.classList.add('sound-effect');
-      // add sound element and necessary attributes;
-
-      soundEffectsContainer.appendChild(soundEffectContainer);
-    });
-
-    return soundEffectsContainer;
-  }
-
-  const generateStartBtn = () => {
-    const startBtn = document.createElement('button');
-
-    startBtn.id = 'start-btn';
-    startBtn.textContent = 'Start';
-
-    return startBtn;
-  }
+    return { timerDisplay, modifyTimesContainer, quickSelectTimeContainer, soundEffectsContainer, startBtn }
+  })();
 
   const initialRender = () => {
     const appContainer = document.createElement('div');
+    const timerDisplay = generate.timerDisplay();
+    const quickSelectTimeContainer = generate.quickSelectTimeContainer();
+    const soundEffectsContainer = generate.soundEffectsContainer();
+    const startBtn = generate.startBtn();
 
     appContainer.id = 'app-container';
 
-    [generateTimerDisplay(), generateModifyTimesContainer(), generateQuickSelectTimeContainer(),
-     generateSoundEffectsContainer(), generateStartBtn()].forEach(el => appContainer.appendChild(el));
+    [timerDisplay, quickSelectTimeContainer, soundEffectsContainer, startBtn]
+    .forEach(el => appContainer.appendChild(el));
     
     document.querySelector('body').appendChild(appContainer);
   };
 
-  return { initialRender }
+  const updateTimerDisplay = newTimerDisplay => {
+    document.querySelector('#timer-display').textContent = newTimerDisplay;
+  }
+
+  return { initialRender, updateTimerDisplay }
 })();
 
 export default displayController;
