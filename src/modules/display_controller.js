@@ -69,7 +69,7 @@ const displayController = (() => {
 
         switch (option) {
           case 'rain':
-            soundEffectContainer.classList.add('fa-cloud-showers-heavy');
+            soundEffectContainer.classList.add('selected-sound', 'fa-cloud-showers-heavy');
             break;
           case 'fire':
             soundEffectContainer.classList.add('fa-fire-alt');
