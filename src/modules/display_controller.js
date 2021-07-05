@@ -97,7 +97,33 @@ const displayController = (() => {
       return startBtn;
     }
 
-    return { timerDisplay, modifyTimesContainer, quickSelectTimeContainer, soundEffectsContainer, startBtn }
+    const credits = () => {
+      const creditsContainer = document.createElement('div');
+      const p = document.createElement('p');
+      const soundURLs = { rain: 'https://freesound.org/people/babuababua/sounds/344430/',
+                         fire: 'https://freesound.org/people/Dynamicell/sounds/17554/',
+                         ocean: 'https://freesound.org/people/Luftrum/sounds/48412/',
+                         'coffee shop': 'https://freesound.org/people/JanevdMerwe1995/sounds/327594/'};
+
+      
+      creditsContainer.id = 'credits-container';
+      p.textContent = 'Sounds';
+
+      creditsContainer.appendChild(p);
+
+      for (let name in soundURLs) {
+        const a = document.createElement('a');
+
+        a.textContent = name;
+        a.setAttribute('href', soundURLs[name]);
+        a.setAttribute('target', '_blank');
+        creditsContainer.appendChild(a);
+      }
+
+      return creditsContainer;
+    }
+
+    return { timerDisplay, modifyTimesContainer, quickSelectTimeContainer, soundEffectsContainer, startBtn, credits }
   })();
 
   const initialRender = () => {
@@ -106,10 +132,11 @@ const displayController = (() => {
     const quickSelectTimeContainer = generate.quickSelectTimeContainer();
     const soundEffectsContainer = generate.soundEffectsContainer();
     const startBtn = generate.startBtn();
+    const creditsContainer = generate.credits();
 
     appContainer.id = 'app-container';
 
-    [timerDisplay, quickSelectTimeContainer, soundEffectsContainer, startBtn]
+    [timerDisplay, quickSelectTimeContainer, soundEffectsContainer, startBtn, creditsContainer]
     .forEach(el => appContainer.appendChild(el));
     
     document.querySelector('body').appendChild(appContainer);

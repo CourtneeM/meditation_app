@@ -9,6 +9,7 @@ html {
 }
 
 body {
+  position: relative;
   min-height: 100vh;
   font-family: sans-serif;
 }
@@ -19,7 +20,8 @@ body {
   justify-content: center;
   align-items: center;
   max-width: 500px;
-  margin: 100px auto 0;
+  margin: 0 auto;
+  padding-top: 100px;
 }
 
 #timer-display-container {
@@ -93,6 +95,26 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+#credits-container {
+  position: absolute;
+  bottom: 20px;
+  text-align: center;
+}
+#credits-container p {
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+#credits-container a {
+  margin-left: 12px;
+  margin-right: 12px;
+  color: #777;
+  text-decoration: none;
+}
+#credits-container a:hover {
+  color: goldenrod;
+  text-decoration: underline;
 }
 
 /*# sourceMappingURL=style.css.map */
