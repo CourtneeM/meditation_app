@@ -7,7 +7,7 @@ const soundEffects = {
   ocean: '../dist/sounds/48412__luftrum__oceanwavescrushing.mp3',
   coffeeShop: '../dist/sounds/327594__janevdmerwe1995__ambience-of-coffee-shop.mp3'
 };
-let selectedSound = soundEffects.rain;
+let selectedSound = 'rain';
 
 const SECONDS_IN_A_MINUTE = 60;
 let currentTimeInSeconds = 300;
